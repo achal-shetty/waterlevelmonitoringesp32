@@ -1,0 +1,18 @@
+function doGet(e) {
+  try {
+    var parameters = e.parameter;
+    var distanceCm = parameters.distanceCm || '';
+    var distanceInch = parameters.distanceInch || '';
+    
+    var sheet = SpreadsheetApp.openById('1eTwI6jKzQiKrvaYUUIAluFTykFNFnNfY6Kf6ibhdjas').getActiveSheet();
+    if (sheet.getLastRow() == 0) {
+      sheet.appendRow(["Timestamp", "Distance (cms)", "Distance (inch)"]);
+    }
+    var newRow = [new Date(), distanceCm, distanceInch];
+    sheet.appendRow(newRow);
+    
+    return ContentService.createTextOutput("Data received successfully");
+  } catch (error) {
+    return ContentService.createTextOutput("Error: " + error.message);
+  }
+}
